@@ -4,3 +4,7 @@ You can get the Facebook iOS code from their github page:
 http://github.com/facebook/facebook-ios-sdk
 
 The FacebookSDKExamples directory has a working example of the DemoApp which was also ported from the Objective-C code.  This example shows the basics of logging in and illustrates some of the things you can do with the API.
+
+NOTE: In order to run the DemoApp you'll first have to create a Facebook app from your Facebook account and set the kAppId variable to your own id.  See http://www.facebook.com/developers/createapp.php for more details.
+
+
