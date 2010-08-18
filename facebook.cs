@@ -16,7 +16,6 @@ using MonoTouch.UIKit;
 
 namespace FacebookSdk
 {
-
 	[BaseType (typeof (UIView))]
 	interface FBDialog {
 
@@ -24,7 +23,7 @@ namespace FacebookSdk
 		[Export ("getStringFromUrl:needle:")]
 		string GetStringFromUrl (string url, string needle);
 
-		//         delegate: (id <FBDialogDelegate>) delegate;
+		// delegate: (id <FBDialogDelegate>) delegate;
 		[Export ("delegate")]
 		FBDialog Delegate { get; }
 
@@ -36,7 +35,7 @@ namespace FacebookSdk
 		[Export ("load")]
 		void Load ();
 
-		//            get:(NSDictionary*)getParams;
+		// get:(NSDictionary*)getParams;
 		[Export ("getParams")]
 		NSDictionary GetParams { get; }
 
@@ -135,8 +134,8 @@ namespace FacebookSdk
 		void Connect ();
 
 	}
+	
 	[Model]
-
 	[BaseType (typeof (NSObject))]
 	interface FBRequestDelegate {
 
@@ -154,28 +153,56 @@ namespace FacebookSdk
 
 		//- (void)request:(FBRequest*)request didLoad:(id)result;
 		[Abstract, Export ("request:didLoad:")]
-		void Request (FBRequest request, IntPtr result);
+		void Request (FBRequest request, NSObject result);
 
 	}
-
+	
 	[BaseType (typeof (NSObject))]
 	interface Facebook {
 
-		//          delegate:(id<FBSessionDelegate>) delegate;
-		[Export ("delegate")]
-		Facebook Delegate { get; }
+		//- (void) authorize:(NSString*) application_id permissions:(NSArray*) permissions delegate:(id<FBSessionDelegate>) delegate;
+		[Export ("authorize:permissions:delegate:")]
+		void Authorize (string application_id, string[] permissions, FBSessionDelegate fbSessionDelegate);
 
 		//- (void) logout:(id<FBSessionDelegate>) delegate;
 		[Export ("logout:")]
-		void Logout (IntPtr delegate1);
+		void Logout (FBSessionDelegate fbSessionDelegate);
+
+		//- (void) requestWithParams:(NSMutableDictionary *) params andDelegate:(id <FBRequestDelegate>) delegate;
+		[Export ("requestWithParams:andDelegate:")]
+		void RequestWithParams (NSDictionary parameters, FBRequestDelegate fbRequestDelegate);
+
+		//- (void) requestWithMethodName:(NSString *) methodName  andParams:(NSMutableDictionary *) params andHttpMethod:(NSString *) httpMethod andDelegate:(id <FBRequestDelegate>) delegate;
+		[Export ("requestWithMethodName:andParams:andHttpMethod:andDelegate:")]
+		void RequestWithMethodName (string methodName, NSDictionary parameters, string httpMethod, FBRequestDelegate fbRequestDelegate);
+
+		//- (void) requestWithGraphPath:(NSString *) graphPath andDelegate:(id <FBRequestDelegate>) delegate;
+		[Export ("requestWithGraphPath:andDelegate:")]
+		void RequestWithGraphPath (string graphPath, FBRequestDelegate fbRequestDelegate);
+
+		//- (void) requestWithGraphPath:(NSString *)graphPath andParams:(NSMutableDictionary *) params andDelegate:(id <FBRequestDelegate>) delegate;
+		[Export ("requestWithGraphPath:andParams:andDelegate:")]
+		void RequestWithGraphPath (string graphPath, NSDictionary parameters, FBRequestDelegate fbRequestDelegate);
+
+		//- (void) requestWithGraphPath:(NSString *)graphPath andParams:(NSMutableDictionary *) params andHttpMethod:(NSString *) httpMethod andDelegate:(id <FBRequestDelegate>) delegate;
+		[Export ("requestWithGraphPath:andParams:andHttpMethod:andDelegate:")]
+		void RequestWithGraphPath (string graphPath, NSDictionary parameters, string httpMethod, FBRequestDelegate fbRequestDelegate);
+
+		//- (void) dialog:(NSString *) action andDelegate:(id<FBDialogDelegate>) delegate;
+		[Export ("dialog:andDelegate:")]
+		void Dialog (string action, FBDialogDelegate fbDialogDelegate);
+
+		//- (void) dialog:(NSString *) action andParams:(NSMutableDictionary *) params andDelegate:(id <FBDialogDelegate>) delegate;
+		[Export ("dialog:andParams:andDelegate:")]
+		void Dialog (string action, NSDictionary parameters, FBDialogDelegate fbDialogDelegate);
 
 		//- (BOOL) isSessionValid;
 		[Export ("isSessionValid")]
 		bool IsSessionValid { get; }
 
 	}
+	
 	[Model]
-
 	[BaseType (typeof (NSObject))]
 	interface FBSessionDelegate {
 
@@ -190,6 +217,5 @@ namespace FacebookSdk
 		//- (void)fbDidLogout;
 		[Abstract, Export ("fbDidLogout")]
 		void FbDidLogout ();
-
 	}
 }
