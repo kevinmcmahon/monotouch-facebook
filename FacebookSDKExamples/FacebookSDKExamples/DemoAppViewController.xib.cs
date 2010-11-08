@@ -38,8 +38,13 @@ namespace FacebookSDKExamples
 		Facebook _facebook;
 		RequestDelegate _requestDelegate;
 		SessionDelegate _sessionDelegate;
-			void Initialize ()
+		
+		void Initialize ()
 		{
+			if(string.IsNullOrEmpty(kAppId))
+				throw new Exception("Your Facebook Application Id must be set before running this example. "
+				                    + "See http://www.facebook.com/developers/createapp.php");
+			
 			_facebook = new Facebook();
 			_requestDelegate = new RequestDelegate(this);
 			_sessionDelegate = new SessionDelegate(this);

@@ -10,7 +10,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>FacebookSDKExamples</RootNamespace>
     <AssemblyName>FacebookSDKExamples</AssemblyName>
-    <MtouchSdkVersion>4.0</MtouchSdkVersion>
+    <MtouchSdkVersion>4.1</MtouchSdkVersion>
     <MtouchMinimumOS>3.0</MtouchMinimumOS>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <MainNibFile>MainWindow.xib</MainNibFile>
