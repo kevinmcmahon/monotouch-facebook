@@ -189,7 +189,7 @@ namespace FacebookSDKExamples
 			_vc.FacebookButton.IsLoggedIn = false;
 		}
 		
-		public override void FbDidNotLogin()
+		public override void FbDidNotLogin(bool cancelled)
 		{
 			Console.WriteLine("FB Did Not Login");
 		}
@@ -220,8 +220,7 @@ namespace FacebookSDKExamples
 			NSDictionary dict;
 			
 			if(result is NSDictionary)
-			{
-				
+			{	
 				dict = result as NSDictionary;
 			}
 			else if(result is NSArray)
@@ -244,6 +243,9 @@ namespace FacebookSDKExamples
 			    _vc.SetText(name.ToString());
 			}
 		}
+	
+		public override void Request (FBRequest request, NSData data)
+		{}
 	}
 	
 	public class DialogDelegate : FBDialogDelegate
