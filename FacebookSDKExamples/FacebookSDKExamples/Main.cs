@@ -10,7 +10,14 @@ namespace FacebookSDKExamples
 	{
 		static void Main (string[] args)
 		{
-			UIApplication.Main (args);
+			try 
+			{
+				UIApplication.Main (args);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine ("Toplevel exception: {0}", e);
+			}
 		}
 	}
 

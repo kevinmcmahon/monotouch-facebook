@@ -33,7 +33,7 @@ namespace FacebookSDKExamples
 		
 		// Your Facebook APP Id must be set before running this example
 		// See http://www.facebook.com/developers/createapp.php
-		const string kAppId = null; // REPLACE THIS!!!
+		const string kAppId = "146876642003167"; // REPLACE THIS!!!
 		
 		Facebook _facebook;
 		RequestDelegate _requestDelegate;
@@ -171,6 +171,7 @@ namespace FacebookSDKExamples
 		
 		public override void FbDidLogin()
 		{
+			Console.WriteLine("FbDidLogin");
 			_vc.SetText("logged in");
 			_vc.UserInfoButton.Hidden = false;
 			_vc.PublishButton.Hidden = false;
@@ -181,6 +182,7 @@ namespace FacebookSDKExamples
 		
 		public override void FbDidLogout()
 		{
+			Console.WriteLine("FbDidLogout");
 			_vc.SetText("Please log in");
 			_vc.UserInfoButton.Hidden = true;
 			_vc.PublishButton.Hidden = true;
