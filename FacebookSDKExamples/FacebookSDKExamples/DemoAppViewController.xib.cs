@@ -33,7 +33,7 @@ namespace FacebookSDKExamples
 		
 		// Your Facebook APP Id must be set before running this example
 		// See http://www.facebook.com/developers/createapp.php
-		const string kAppId = "146876642003167"; // REPLACE THIS!!!
+		const string kAppId = null; // REPLACE THIS!!!
 		
 		Facebook _facebook;
 		RequestDelegate _requestDelegate;
