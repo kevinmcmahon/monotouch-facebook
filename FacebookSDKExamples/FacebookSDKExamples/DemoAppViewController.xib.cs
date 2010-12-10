@@ -45,7 +45,7 @@ namespace FacebookSDKExamples
 				throw new Exception("Your Facebook Application Id must be set before running this example. "
 				                    + "See http://www.facebook.com/developers/createapp.php");
 			
-			_facebook = new Facebook();
+			_facebook = new Facebook(kAppId);
 			_requestDelegate = new RequestDelegate(this);
 			_sessionDelegate = new SessionDelegate(this);
 		}
@@ -146,7 +146,7 @@ namespace FacebookSDKExamples
 		
 		void Login()
 		{
-			_facebook.Authorize(kAppId, new []{"read_stream", "offline_access"}, _sessionDelegate);
+			_facebook.Authorize(new string[]{"read_stream", "offline_access"}, _sessionDelegate);
 		}
 
 		void Logout()

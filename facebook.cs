@@ -2,14 +2,15 @@
 //  MonoTouch bindings for Facebook iOS SDK 
 //  use with libfacebook_ios_sdk.a  
 //
-//  Facebook Objective-C Source : http://github.com/facebook/facebook-ios-sdk
+//  Facebook Objective-C Source w/ MonoTouch modifications :
+//  https://github.com/kevinmcmahon/facebook-ios-sdk
 //
 //  MIT X11 licensed
 //
 // Copyright 2010 Kevin McMahon (http://twitter.com/klmcmahon)
 // 
-// These bindings are for facebook-ios-sdk commit 6e15463bbd411d71e11c6368b2eb897cd4024656s
-// https://github.com/facebook/facebook-ios-sdk/commit/6e15463bbd411d71e11c6368b2eb897cd4024656
+// These bindings are for:
+// https://github.com/kevinmcmahon/facebook-ios-sdk/commit/7f64bc25b2d2b03a3f17586988bbc80cd731ffc1
 
 using System;
 using System.Drawing;
@@ -23,9 +24,17 @@ namespace FacebookSdk
 	[BaseType (typeof (NSObject))]
 	interface Facebook {
 
-		//- (void)authorize:(NSString *)application_id permissions:(NSArray *)permissions delegate:(id<FBSessionDelegate>)delegate;
-		[Export ("authorize:permissions:delegate:")]
-		void Authorize (string application_id, string[] permissions, FBSessionDelegate fbSessionDelegate);
+		//- (id)initWithAppId:(NSString *)app_id;
+		[Export ("initWithAppId:")]
+		IntPtr Constructor (string app_id);
+
+		//- (void)authorize:(NSArray *)permissions delegate:(id<FBSessionDelegate>)delegate;
+		[Export ("authorize:delegate:")]
+		void Authorize (string[] permissions, FBSessionDelegate fbSessionDelegate);
+
+		// delegate:(id<FBSessionDelegate>)delegate;
+		[Export ("delegate")]
+		Facebook Delegate { get; }
 
 		//- (BOOL)handleOpenURL:(NSURL *)url;
 		[Export ("handleOpenURL:")]
@@ -120,7 +129,7 @@ namespace FacebookSdk
 		[Abstract, Export ("requestLoading:")]
 		void RequestLoading (FBRequest request);
 
-		//- (void)request:(FBRequest *)request didReceiveResponse:(NSURLResponse *)response;
+		//- (void)request:(FBRequest *)request didReceiveResponse:(NSUrlResponse *)response;
 		[Abstract, Export ("request:didReceiveResponse:")]
 		void Request (FBRequest request, NSUrlResponse response);
 
