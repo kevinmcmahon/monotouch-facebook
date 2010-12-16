@@ -35,10 +35,12 @@ namespace FacebookSdk
 		// delegate:(id<FBSessionDelegate>)delegate;
 		[Export ("delegate")]
 		Facebook Delegate { get; }
-
+		
+		// @property(nonatomic, copy) NSString* accessToken;
 		[Export ("accessToken")]
 		string AccessToken { get; }
 		
+		// @property(nonatomic, copy) NSDate* expirationDate;
 		[Export ("expirationDate")]
 		NSDate ExpirationDate { get; }
 		
