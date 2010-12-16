@@ -36,6 +36,12 @@ namespace FacebookSdk
 		[Export ("delegate")]
 		Facebook Delegate { get; }
 
+		[Export ("accessToken")]
+		string AccessToken { get; }
+		
+		[Export ("expirationDate")]
+		NSDate ExpirationDate { get; }
+		
 		//- (BOOL)handleOpenURL:(NSURL *)url;
 		[Export ("handleOpenURL:")]
 		bool HandleOpenUrl (NSUrl url);
