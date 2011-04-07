@@ -1,7 +1,7 @@
 Monotouch bindings for the Facebook iOS SDK
 ===========================================
 
-You can get the Facebook iOS code from their [github page](http://github.com/facebook/facebook-ios-sdk).
+I've [forked the official Facebook iOS SDK](https://github.com/kevinmcmahon/facebook-ios-sdk) and made two key changes. The first was to turn off THUMB code generation so the static library code be linked to successfully by MonoTouch and the second change was to create a "fat" static library. Having a single library that could be used on the device or with the sim simplifies things as you don't have to make sure you're linking/using the right binary.
 
 The FacebookSDKExamples directory has a working example of the DemoApp which was also ported from the Objective-C code.  This example shows the basics of logging in and illustrates some of the things you can do with the API.
 

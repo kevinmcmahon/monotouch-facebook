@@ -36,14 +36,14 @@ namespace FacebookSdk
 		[Export ("delegate")]
 		Facebook Delegate { get; }
 		
-		// @property(nonatomic, copy) NSString* accessToken;
-		[Export ("accessToken")]
-		string AccessToken { get; }
-		
-		// @property(nonatomic, copy) NSDate* expirationDate;
-		[Export ("expirationDate")]
-		NSDate ExpirationDate { get; }
-		
+		//@property(nonatomic, copy) NSString* accessToken;
+		[Export ("accessToken", ArgumentSemantic.Copy)]
+		string AccessToken { get; set;  }
+
+		//@property(nonatomic, copy) NSDate* expirationDate;
+		[Export ("expirationDate", ArgumentSemantic.Copy)]
+		NSDate ExpirationDate { get; set;  }
+				
 		//- (BOOL)handleOpenURL:(NSURL *)url;
 		[Export ("handleOpenURL:")]
 		bool HandleOpenUrl (NSUrl url);
