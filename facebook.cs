@@ -7,10 +7,10 @@
 //
 //  MIT X11 licensed
 //
-// Copyright 2010 Kevin McMahon (http://twitter.com/klmcmahon)
+// Copyright 2011 Kevin McMahon (http://www.kevfoo.com)
 // 
 // These bindings are for:
-// https://github.com/kevinmcmahon/facebook-ios-sdk/commit/7f64bc25b2d2b03a3f17586988bbc80cd731ffc1
+// https://github.com/kevinmcmahon/facebook-ios-sdk/commit/4dae61bc5eb8d01cbeea734cb305619675163ab2
 
 using System;
 using System.Drawing;
@@ -27,14 +27,10 @@ namespace FacebookSdk
 		//- (id)initWithAppId:(NSString *)app_id;
 		[Export ("initWithAppId:")]
 		IntPtr Constructor (string app_id);
-
+		
 		//- (void)authorize:(NSArray *)permissions delegate:(id<FBSessionDelegate>)delegate;
 		[Export ("authorize:delegate:")]
 		void Authorize (string[] permissions, FBSessionDelegate fbSessionDelegate);
-
-		// delegate:(id<FBSessionDelegate>)delegate;
-		[Export ("delegate")]
-		Facebook Delegate { get; }
 		
 		//@property(nonatomic, copy) NSString* accessToken;
 		[Export ("accessToken", ArgumentSemantic.Copy)]
@@ -43,7 +39,11 @@ namespace FacebookSdk
 		//@property(nonatomic, copy) NSDate* expirationDate;
 		[Export ("expirationDate", ArgumentSemantic.Copy)]
 		NSDate ExpirationDate { get; set;  }
-				
+		
+		//@property(nonatomic, assign) id<FBSessionDelegate> sessionDelegate;
+		[Export ("sessionDelegate", ArgumentSemantic.Assign)]
+		IntPtr SessionDelegate { get; set;  }
+
 		//- (BOOL)handleOpenURL:(NSURL *)url;
 		[Export ("handleOpenURL:")]
 		bool HandleOpenUrl (NSUrl url);
@@ -52,25 +52,25 @@ namespace FacebookSdk
 		[Export ("logout:")]
 		void Logout (FBSessionDelegate fbSessionDelegate);
 
-		//- (void)requestWithParams:(NSMutableDictionary *)params andDelegate:(id <FBRequestDelegate>)delegate;
+		//- (FBRequest*)requestWithParams:(NSMutableDictionary *)params andDelegate:(id <FBRequestDelegate>)delegate;
 		[Export ("requestWithParams:andDelegate:")]
-		void RequestWithParams (NSDictionary parms, FBRequestDelegate fbRequestDelegate);
+		FBRequest RequestWithParams (NSDictionary parms, FBRequestDelegate fbRequestDelegate);
 
-		//- (void)requestWithMethodName:(NSString *)methodName andParams:(NSMutableDictionary *)params andHttpMethod:(NSString *)httpMethod andDelegate:(id <FBRequestDelegate>)delegate;
+		//- (FBRequest*)requestWithMethodName:(NSString *)methodName andParams:(NSMutableDictionary *)params andHttpMethod:(NSString *)httpMethod andDelegate:(id <FBRequestDelegate>)delegate;
 		[Export ("requestWithMethodName:andParams:andHttpMethod:andDelegate:")]
-		void RequestWithMethodName (string methodName, NSDictionary parms, string httpMethod, FBRequestDelegate fbRequestDelegate);
+		FBRequest RequestWithMethodName (string methodName, NSDictionary parms, string httpMethod, FBRequestDelegate fbRequestDelegate);
 
-		//- (void)requestWithGraphPath:(NSString *)graphPath andDelegate:(id <FBRequestDelegate>)delegate;
+		//- (FBRequest*)requestWithGraphPath:(NSString *)graphPath andDelegate:(id <FBRequestDelegate>)delegate;
 		[Export ("requestWithGraphPath:andDelegate:")]
-		void RequestWithGraphPath (string graphPath, FBRequestDelegate fbRequestDelegate);
+		FBRequest RequestWithGraphPath (string graphPath, FBRequestDelegate fbRequestDelegate);
 
-		//- (void)requestWithGraphPath:(NSString *)graphPath andParams:(NSMutableDictionary *)params andDelegate:(id <FBRequestDelegate>)delegate;
+		//- (FBRequest*)requestWithGraphPath:(NSString *)graphPath andParams:(NSMutableDictionary *)params andDelegate:(id <FBRequestDelegate>)delegate;
 		[Export ("requestWithGraphPath:andParams:andDelegate:")]
-		void RequestWithGraphPath (string graphPath, NSDictionary parms, FBRequestDelegate fbRequestDelegate);
+		FBRequest RequestWithGraphPath (string graphPath, NSDictionary parms, FBRequestDelegate fbRequestDelegate);
 
-		//- (void)requestWithGraphPath:(NSString *)graphPath andParams:(NSMutableDictionary *)params andHttpMethod:(NSString *)httpMethod andDelegate:(id <FBRequestDelegate>)delegate;
+		//- (FBRequest*)requestWithGraphPath:(NSString *)graphPath andParams:(NSMutableDictionary *)params andHttpMethod:(NSString *)httpMethod andDelegate:(id <FBRequestDelegate>)delegate;
 		[Export ("requestWithGraphPath:andParams:andHttpMethod:andDelegate:")]
-		void RequestWithGraphPath (string graphPath, NSDictionary parms, string httpMethod, FBRequestDelegate fbRequestDelegate);
+		FBRequest RequestWithGraphPath (string graphPath, NSDictionary parms, string httpMethod, FBRequestDelegate fbRequestDelegate);
 
 		//- (void)dialog:(NSString *)action andDelegate:(id<FBDialogDelegate>)delegate;
 		[Export ("dialog:andDelegate:")]
@@ -107,11 +107,35 @@ namespace FacebookSdk
 	[BaseType (typeof (NSObject))]
 	interface FBRequest {
 
+		//@property(nonatomic,assign) id<FBRequestDelegate> delegate;
+		[Export ("delegate", ArgumentSemantic.Assign)]
+		FBRequestDelegate Delegate { get; set;  }
+
+		//@property(nonatomic,copy) NSString* url;
+		[Export ("url", ArgumentSemantic.Copy)]
+		string Url { get; set;  }
+
+		//@property(nonatomic,copy) NSString* httpMethod;
+		[Export ("httpMethod", ArgumentSemantic.Copy)]
+		string HttpMethod { get; set;  }
+
+		//@property(nonatomic,retain) NSMutableDictionary* params;
+		[Export ("params", ArgumentSemantic.Retain)]
+		NSDictionary Parameters { get; set;  }
+
+		//@property(nonatomic,assign) NSURLConnection*  connection;
+		[Export ("connection", ArgumentSemantic.Assign)]
+		NSUrlConnection Connection { get; set;  }
+
+		//@property(nonatomic,assign) NSMutableData* responseText;
+		[Export ("responseText", ArgumentSemantic.Assign)]
+		NSMutableData ResponseText { get; set;  }
+
 		//+ (NSString*)serializeURL:(NSString *)baseUrl params:(NSDictionary *)params;
 		[Static, Export ("serializeURL:params:")]
 		string SerializeUrl (string baseUrl, NSDictionary parms);
 
-		//+ (NSString*)serializeURL:(NSString *)baseUrl params:(NSDictionary *)params httpMethod:(NSString *)httpMethod;
+		//+ (NSString*)serializeURL:(NSString *)baseUrl params:(NSDictionary *)params  httpMethod:(NSString *)httpMethod;
 		[Static, Export ("serializeURL:params:httpMethod:")]
 		string SerializeUrl (string baseUrl, NSDictionary parms, string httpMethod);
 
@@ -137,7 +161,7 @@ namespace FacebookSdk
 		[Abstract, Export ("requestLoading:")]
 		void RequestLoading (FBRequest request);
 
-		//- (void)request:(FBRequest *)request didReceiveResponse:(NSUrlResponse *)response;
+		//- (void)request:(FBRequest *)request didReceiveResponse:(NSURLResponse *)response;
 		[Abstract, Export ("request:didReceiveResponse:")]
 		void Request (FBRequest request, NSUrlResponse response);
 
@@ -158,6 +182,18 @@ namespace FacebookSdk
 	[BaseType (typeof (UIView))]
 	interface FBDialog {
 
+		//@property(nonatomic,assign) id<FBDialogDelegate> delegate;
+		[Export ("delegate", ArgumentSemantic.Assign)]
+		FBDialogDelegate Delegate { get; set;  }
+
+		//@property(nonatomic, retain) NSMutableDictionary* params;
+		[Export ("params", ArgumentSemantic.Retain)]
+		NSDictionary Parameters { get; set;  }
+
+		//@property(nonatomic,copy) NSString* title;
+		[Export ("title", ArgumentSemantic.Copy)]
+		string Title { get; set;  }
+	
 		//- (NSString *) getStringFromUrl: (NSString*) url needle:(NSString *) needle;
 		[Export ("getStringFromUrl:needle:")]
 		string GetStringFromUrl (string url, string needle);
