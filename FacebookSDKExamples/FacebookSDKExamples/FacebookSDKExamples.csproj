@@ -63,7 +63,6 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchExtraArgs>-v -v -v -gcc_flags "-lgcc_eh -xcc -L${ProjectDir} -lfacebook_ios_sdk -framework CoreGraphics -force_load ${ProjectDir}/libfacebook_ios_sdk.a"</MtouchExtraArgs>
     <MtouchI18n />
-    <additionalargs>-v -gcc_flags "-L${ProjectDir} -lfacebook_ios_sdk -framework CoreGraphics -force_load ${ProjectDir}/libfacebook_ios_sdk.a"</additionalargs>
     <MtouchUseLlvm>false</MtouchUseLlvm>
     <MtouchArch>ARMv6</MtouchArch>
     <MtouchUseThumb>false</MtouchUseThumb>

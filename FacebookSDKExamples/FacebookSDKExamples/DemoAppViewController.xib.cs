@@ -200,16 +200,11 @@ namespace FacebookSDKExamples
 			_vc = vc;
 		}
 		
-		public override void RequestLoading(FBRequest request)
-		{}
+		public override void RequestLoading(FBRequest request) {}
 		
-		public override void Request (FBRequest request, NSUrlResponse response)
-		{
-		}
+		public override void Request (FBRequest request, NSUrlResponse response) {}
 		
-		public override void Request (FBRequest request, NSError error)
-		{
-		}
+		public override void Request (FBRequest request, NSError error) {}
 		
 		public override void Request (FBRequest request, NSObject result)
 		{

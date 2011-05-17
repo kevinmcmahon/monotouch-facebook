@@ -24,14 +24,6 @@ namespace FacebookSdk
 	[BaseType (typeof (NSObject))]
 	interface Facebook {
 
-		//- (id)initWithAppId:(NSString *)app_id;
-		[Export ("initWithAppId:")]
-		IntPtr Constructor (string app_id);
-		
-		//- (void)authorize:(NSArray *)permissions delegate:(id<FBSessionDelegate>)delegate;
-		[Export ("authorize:delegate:")]
-		void Authorize (string[] permissions, FBSessionDelegate fbSessionDelegate);
-		
 		//@property(nonatomic, copy) NSString* accessToken;
 		[Export ("accessToken", ArgumentSemantic.Copy)]
 		string AccessToken { get; set;  }
@@ -39,10 +31,26 @@ namespace FacebookSdk
 		//@property(nonatomic, copy) NSDate* expirationDate;
 		[Export ("expirationDate", ArgumentSemantic.Copy)]
 		NSDate ExpirationDate { get; set;  }
-		
+
 		//@property(nonatomic, assign) id<FBSessionDelegate> sessionDelegate;
 		[Export ("sessionDelegate", ArgumentSemantic.Assign)]
-		IntPtr SessionDelegate { get; set;  }
+		FBSessionDelegate SessionDelegate { get; set;  }
+
+		//@property(nonatomic, copy) NSString* localAppId;
+		[Export ("localAppId", ArgumentSemantic.Copy)]
+		string LocalAppId { get; set;  }
+	
+		//- (id)initWithAppId:(NSString *)app_id;
+		[Export ("initWithAppId:")]
+		IntPtr Constructor (string app_id);
+
+		//- (void)authorize:(NSArray *)permissions delegate:(id<FBSessionDelegate>)delegate;
+		[Export ("authorize:delegate:")]
+		void Authorize (string[] permissions, FBSessionDelegate fbSessionDelegate);
+
+		//- (void)authorize:(NSArray *)permissions delegate:(id<FBSessionDelegate>)delegate localAppId:(NSString *)localAppId;
+		[Export ("authorize:delegate:localAppId:")]
+		void Authorize (string[] permissions, FBSessionDelegate fbSessionDelegate, string localAppId);
 
 		//- (BOOL)handleOpenURL:(NSURL *)url;
 		[Export ("handleOpenURL:")]
@@ -85,8 +93,8 @@ namespace FacebookSdk
 		bool IsSessionValid { get; }
 
 	}
-	[Model]
 
+	[Model]
 	[BaseType (typeof (NSObject))]
 	interface FBSessionDelegate {
 
@@ -121,7 +129,7 @@ namespace FacebookSdk
 
 		//@property(nonatomic,retain) NSMutableDictionary* params;
 		[Export ("params", ArgumentSemantic.Retain)]
-		NSDictionary Parameters { get; set;  }
+		NSDictionary Params { get; set;  }
 
 		//@property(nonatomic,assign) NSURLConnection*  connection;
 		[Export ("connection", ArgumentSemantic.Assign)]
@@ -135,7 +143,7 @@ namespace FacebookSdk
 		[Static, Export ("serializeURL:params:")]
 		string SerializeUrl (string baseUrl, NSDictionary parms);
 
-		//+ (NSString*)serializeURL:(NSString *)baseUrl params:(NSDictionary *)params  httpMethod:(NSString *)httpMethod;
+		//+ (NSString*)serializeURL:(NSString *)baseUrl params:(NSDictionary *)params httpMethod:(NSString *)httpMethod;
 		[Static, Export ("serializeURL:params:httpMethod:")]
 		string SerializeUrl (string baseUrl, NSDictionary parms, string httpMethod);
 
@@ -152,8 +160,8 @@ namespace FacebookSdk
 		void Connect ();
 
 	}
-	[Model]
 
+	[Model]
 	[BaseType (typeof (NSObject))]
 	interface FBRequestDelegate {
 
@@ -188,7 +196,7 @@ namespace FacebookSdk
 
 		//@property(nonatomic, retain) NSMutableDictionary* params;
 		[Export ("params", ArgumentSemantic.Retain)]
-		NSDictionary Parameters { get; set;  }
+		NSDictionary Params { get; set;  }
 
 		//@property(nonatomic,copy) NSString* title;
 		[Export ("title", ArgumentSemantic.Copy)]
@@ -210,9 +218,9 @@ namespace FacebookSdk
 		[Export ("load")]
 		void Load ();
 
-		//- (void)loadURL:(NSString*)url get:(NSDictionary*)getParams;
-		[Export ("loadURL:get:")]
-		void LoadUrl (string url, NSDictionary getParams);
+		//            get:(NSDictionary*)getParams;
+		[Export ("getParams")]
+		NSDictionary GetParams { get; }
 
 		//- (void)dismissWithSuccess:(BOOL)success animated:(BOOL)animated;
 		[Export ("dismissWithSuccess:animated:")]
@@ -239,8 +247,8 @@ namespace FacebookSdk
 		void DialogDidCancel (NSUrl url);
 
 	}
-	[Model]
 
+	[Model]
 	[BaseType (typeof (NSObject))]
 	interface FBDialogDelegate {
 
@@ -278,8 +286,8 @@ namespace FacebookSdk
 		IntPtr Constructor (string loginURL, NSDictionary parms, FBLoginDialogDelegate fbLoginDialogDelegate);
 
 	}
-	[Model]
 
+	[Model]
 	[BaseType (typeof (NSObject))]
 	interface FBLoginDialogDelegate {
 
