@@ -1,3 +1,6 @@
+# Update: The [Mono Project](https://github.com/mono/) has been maintaining a [set of bindings](https://github.com/mono/monotouch-bindings/tree/master/FacebookConnect)
+. I'm leaving the repo but will not be making any future revisions.
+
 Monotouch bindings for the Facebook iOS SDK
 ===========================================
 
